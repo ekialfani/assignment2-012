@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"assignment2-012/routers"
+)
 
 func main() {
-	fmt.Println("assignment 2")
+	routers.StartServer().Run(":8080")
 }
