@@ -9,6 +9,32 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func DeleteOrderById(context *gin.Context) {
+	db := database.GetDB()
+	id := context.Param("id")
+
+	var order models.Order
+
+	err := db.Preload("Items").First(&order, id).Error
+
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"error_message": fmt.Sprintf("user with id %v not found", id),
+		})
+		return
+	}
+
+	for _, item := range order.Items {
+		db.Delete(&item)
+	}
+
+	db.Delete(&order)
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": fmt.Sprintf("order with id %v has been successfully deleted", id),
+	})
+}
+
 func UpdateOrderById(context *gin.Context) {
 	db := database.GetDB()
 	id := context.Param("id")
