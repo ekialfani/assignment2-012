@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"assignment2-012/database"
+	"fmt"
+)
 
 func main() {
-	fmt.Println("assignment 2")
+	fmt.Println("start connected to database...")
+	database.StartDB()
 }
