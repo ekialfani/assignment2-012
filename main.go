@@ -1,11 +1,9 @@
 package main
 
 import (
-	"assignment2-012/database"
-	"fmt"
+	"assignment2-012/routers"
 )
 
 func main() {
-	fmt.Println("start connected to database...")
-	database.StartDB()
+	routers.StartServer().Run(":8080")
 }
