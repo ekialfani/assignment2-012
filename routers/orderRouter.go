@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"assignment2-012/controllers"
 	"assignment2-012/database"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,7 @@ func StartServer() *gin.Engine {
 
 	router := gin.Default()
 
-	router.GET("/test", nil)
+	router.POST("/order", controllers.CreateOrder)
 
 	return router
 }
