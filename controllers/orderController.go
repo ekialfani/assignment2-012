@@ -3,10 +3,45 @@ package controllers
 import (
 	"assignment2-012/database"
 	"assignment2-012/models"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
+
+func UpdateOrderById(context *gin.Context) {
+	db := database.GetDB()
+	id := context.Param("id")
+
+	var order models.Order
+
+	err := db.Preload("Items").First(&order, id).Error
+
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"error_message": fmt.Sprintf("user with id %v not found", id),
+		})
+		return
+	}
+
+	if err := context.ShouldBindJSON(&order); err != nil {
+		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"error_message": err.Error(),
+		})
+		return
+	}
+
+	for _, item := range order.Items {
+		db.Save(&item)
+	}
+
+	db.Save(&order)
+
+	context.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"data": order,
+	})
+}
 
 func GetAllOrders(context *gin.Context) {
 	db := database.GetDB()
