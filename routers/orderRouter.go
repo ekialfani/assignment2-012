@@ -13,6 +13,7 @@ func StartServer() *gin.Engine {
 	router := gin.Default()
 
 	router.POST("/order", controllers.CreateOrder)
+	router.GET("/orders", controllers.GetAllOrders)
 
 	return router
 }

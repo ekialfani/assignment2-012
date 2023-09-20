@@ -8,6 +8,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetAllOrders(context *gin.Context) {
+	db := database.GetDB()
+	
+	var orders []models.Order
+
+	err := db.Preload("Items").Find(&orders).Error
+
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"error_message": "Failed to retrieve orders data",
+			"error_detail":  err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"Data": orders,
+	})
+}
+
 func CreateOrder(context *gin.Context) {
 	db := database.GetDB()
 
