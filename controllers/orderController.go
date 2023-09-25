@@ -58,13 +58,13 @@ func UpdateOrderById(context *gin.Context) {
 	}
 
 	for _, item := range order.Items {
-		newItem := models.Item {
+		updatedItem := models.Item {
 			ItemCode: item.ItemCode,
 			Description: item.Description,
 			Quantity: item.Quantity,
 		}
 
-		err = db.Model(&item).Where("id = ?", item.ID).Updates(newItem).Error
+		err = db.Model(&item).Where("id = ?", item.ID).Updates(updatedItem).Error
 
 		if err != nil {
 			context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
