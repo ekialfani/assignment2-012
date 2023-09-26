@@ -50,7 +50,7 @@ func UpdateOrderById(context *gin.Context) {
 		return
 	}
 
-	if err := context.ShouldBindJSON(&order); err != nil {
+	if err = context.ShouldBindJSON(&order); err != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"error_message": err.Error(),
 		})
@@ -58,10 +58,30 @@ func UpdateOrderById(context *gin.Context) {
 	}
 
 	for _, item := range order.Items {
-		db.Save(&item)
+		updatedItem := models.Item {
+			ItemCode: item.ItemCode,
+			Description: item.Description,
+			Quantity: item.Quantity,
+		}
+
+		err = db.Model(&item).Where("id = ?", item.ID).Updates(updatedItem).Error
+
+		if err != nil {
+			context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"error_message": err.Error(),
+			})
+			return
+		}
 	}
 
-	db.Save(&order)
+	err = db.Model(&order).Where("id = ?", id).Updates(order).Error
+
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"error_message": err.Error(),
+		})
+		return
+	}
 
 	context.JSON(http.StatusOK, gin.H{
 		"code": 200,
@@ -101,7 +121,7 @@ func CreateOrder(context *gin.Context) {
 	err := db.Create(&order).Error
 
 	if err != nil {
-		context.JSON(500, gin.H{"message": err.Error()})
+		context.JSON(500, gin.H{"error_message": err.Error()})
 		return
 	}
 
