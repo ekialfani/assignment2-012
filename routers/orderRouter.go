@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"assignment2-012/controllers"
-	"assignment2-012/database"
+	"github.com/ekialfani/assignment2-012/controllers"
+	"github.com/ekialfani/assignment2-012/database"
 
 	"github.com/gin-gonic/gin"
 )

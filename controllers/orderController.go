@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"assignment2-012/database"
-	"assignment2-012/models"
+	"github.com/ekialfani/assignment2-012/database"
+	"github.com/ekialfani/assignment2-012/models"
 	"fmt"
 	"net/http"
 

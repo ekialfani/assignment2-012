@@ -1,4 +1,4 @@
-module assignment2-012
+module github.com/ekialfani/assignment2-012
 
 go 1.20
 
