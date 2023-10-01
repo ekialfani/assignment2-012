@@ -1,8 +1,8 @@
 package database
 
 import (
-	"assignment2-012/config"
-	"assignment2-012/models"
+	"github.com/ekialfani/assignment2-012/config"
+	"github.com/ekialfani/assignment2-012/models"
 	"log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

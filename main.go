@@ -1,7 +1,7 @@
 package main
 
 import (
-	"assignment2-012/routers"
+	"github.com/ekialfani/assignment2-012/routers"
 	"log"
 	"github.com/joho/godotenv"
 )
